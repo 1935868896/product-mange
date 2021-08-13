@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GenBaseInfo {
     @Value("gen.packageName")
-    private String packageName ="com.zc.modules.quartz";
+    private String packageName ="com.zc.modules.project";
     @Value("gen.author")
     private String author="Zhang C";
 

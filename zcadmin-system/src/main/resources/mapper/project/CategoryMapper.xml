@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.CategoryMapper">
+    <resultMap type="Category" id="BaseResultMap">
+            <result property="catId" jdbcType="BIGINT" column="cat_id"/>
+            <result property="name" jdbcType="CHAR" column="name"/>
+            <result property="parentCid" jdbcType="BIGINT" column="parent_cid"/>
+            <result property="catLevel" jdbcType="INTEGER" column="cat_level"/>
+            <result property="showStatus" jdbcType="TINYINT" column="show_status"/>
+            <result property="sort" jdbcType="INTEGER" column="sort"/>
+            <result property="icon" jdbcType="CHAR" column="icon"/>
+            <result property="productUnit" jdbcType="CHAR" column="product_unit"/>
+            <result property="productCount" jdbcType="INTEGER" column="product_count"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+cat_id,name,parent_cid,cat_level,show_status,sort,icon,product_unit,product_count
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category
+        where cat_id = #{catId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="catId != null ">
+                and cat_id = #{catId,jdbcType=BIGINT}
+            </if>
+            <if test="name != null  and name != '' ">
+                and name = #{name,jdbcType=CHAR}
+            </if>
+            <if test="parentCid != null ">
+                and parent_cid = #{parentCid,jdbcType=BIGINT}
+            </if>
+            <if test="catLevel != null ">
+                and cat_level = #{catLevel,jdbcType=INTEGER}
+            </if>
+            <if test="showStatus != null ">
+                and show_status = #{showStatus,jdbcType=TINYINT}
+            </if>
+            <if test="sort != null ">
+                and sort = #{sort,jdbcType=INTEGER}
+            </if>
+            <if test="icon != null  and icon != '' ">
+                and icon = #{icon,jdbcType=CHAR}
+            </if>
+            <if test="productUnit != null  and productUnit != '' ">
+                and product_unit = #{productUnit,jdbcType=CHAR}
+            </if>
+            <if test="productCount != null ">
+                and product_count = #{productCount,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.catId != null ">
+                and cat_id = #{record.catId,jdbcType=BIGINT}
+            </if>
+            <if test="record.name != null  and record.name != '' ">
+                and name = #{record.name,jdbcType=CHAR}
+            </if>
+            <if test="record.parentCid != null ">
+                and parent_cid = #{record.parentCid,jdbcType=BIGINT}
+            </if>
+            <if test="record.catLevel != null ">
+                and cat_level = #{record.catLevel,jdbcType=INTEGER}
+            </if>
+            <if test="record.showStatus != null ">
+                and show_status = #{record.showStatus,jdbcType=TINYINT}
+            </if>
+            <if test="record.sort != null ">
+                and sort = #{record.sort,jdbcType=INTEGER}
+            </if>
+            <if test="record.icon != null  and record.icon != '' ">
+                and icon = #{record.icon,jdbcType=CHAR}
+            </if>
+            <if test="record.productUnit != null  and record.productUnit != '' ">
+                and product_unit = #{record.productUnit,jdbcType=CHAR}
+            </if>
+            <if test="record.productCount != null ">
+                and product_count = #{record.productCount,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="Category">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category
+        where cat_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_category
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="catId != null ">
+        and cat_id = #{catId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null  and name != '' ">
+        and name = #{name,jdbcType=CHAR}
+        </if>
+        <if test="parentCid != null ">
+        and parent_cid = #{parentCid,jdbcType=BIGINT}
+        </if>
+        <if test="catLevel != null ">
+        and cat_level = #{catLevel,jdbcType=INTEGER}
+        </if>
+        <if test="showStatus != null ">
+        and show_status = #{showStatus,jdbcType=TINYINT}
+        </if>
+        <if test="sort != null ">
+        and sort = #{sort,jdbcType=INTEGER}
+        </if>
+        <if test="icon != null  and icon != '' ">
+        and icon = #{icon,jdbcType=CHAR}
+        </if>
+        <if test="productUnit != null  and productUnit != '' ">
+        and product_unit = #{productUnit,jdbcType=CHAR}
+        </if>
+        <if test="productCount != null ">
+        and product_count = #{productCount,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="Category"             useGeneratedKeys="true" keyProperty="catId">
+        insert into pms_category (
+            cat_id,
+            name,
+            parent_cid,
+            cat_level,
+            show_status,
+            sort,
+            icon,
+            product_unit,
+            product_count
+    )
+        values
+        (         #{catId,jdbcType=BIGINT},         #{name,jdbcType=CHAR},         #{parentCid,jdbcType=BIGINT},         #{catLevel,jdbcType=INTEGER},         #{showStatus,jdbcType=TINYINT},         #{sort,jdbcType=INTEGER},         #{icon,jdbcType=CHAR},         #{productUnit,jdbcType=CHAR},         #{productCount,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="Category"            useGeneratedKeys="true" keyProperty="catId">
+        insert into pms_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="name != null  and name != ''  ">name,</if>
+                    <if test="parentCid != null  ">parent_cid,</if>
+                    <if test="catLevel != null  ">cat_level,</if>
+                    <if test="showStatus != null  ">show_status,</if>
+                    <if test="sort != null  ">sort,</if>
+                    <if test="icon != null  and icon != ''  ">icon,</if>
+                    <if test="productUnit != null  and productUnit != ''  ">product_unit,</if>
+                    <if test="productCount != null  ">product_count,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="name != null  and name != ''  ">#{name,jdbcType=CHAR},</if>
+                    <if test="parentCid != null  ">#{parentCid,jdbcType=BIGINT},</if>
+                    <if test="catLevel != null  ">#{catLevel,jdbcType=INTEGER},</if>
+                    <if test="showStatus != null  ">#{showStatus,jdbcType=TINYINT},</if>
+                    <if test="sort != null  ">#{sort,jdbcType=INTEGER},</if>
+                    <if test="icon != null  and icon != ''  ">#{icon,jdbcType=CHAR},</if>
+                    <if test="productUnit != null  and productUnit != ''  ">#{productUnit,jdbcType=CHAR},</if>
+                    <if test="productCount != null  ">#{productCount,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="catId">
+        insert into  pms_category (
+            cat_id,
+            name,
+            parent_cid,
+            cat_level,
+            show_status,
+            sort,
+            icon,
+            product_unit,
+            product_count
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.catId,jdbcType=BIGINT},
+                #{record.name,jdbcType=CHAR},
+                #{record.parentCid,jdbcType=BIGINT},
+                #{record.catLevel,jdbcType=INTEGER},
+                #{record.showStatus,jdbcType=TINYINT},
+                #{record.sort,jdbcType=INTEGER},
+                #{record.icon,jdbcType=CHAR},
+                #{record.productUnit,jdbcType=CHAR},
+                #{record.productCount,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Category">
+        update pms_category set
+                cat_id =#{catId,jdbcType=BIGINT} ,
+                name =#{name,jdbcType=CHAR} ,
+                parent_cid =#{parentCid,jdbcType=BIGINT} ,
+                cat_level =#{catLevel,jdbcType=INTEGER} ,
+                show_status =#{showStatus,jdbcType=TINYINT} ,
+                sort =#{sort,jdbcType=INTEGER} ,
+                icon =#{icon,jdbcType=CHAR} ,
+                product_unit =#{productUnit,jdbcType=CHAR} ,
+                product_count =#{productCount,jdbcType=INTEGER} 
+        where cat_id = #{catId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="Category">
+        update pms_category
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="name != null  and name != ''  ">name = #{name,jdbcType=CHAR},</if>
+                    <if test="parentCid != null  ">parent_cid = #{parentCid,jdbcType=BIGINT},</if>
+                    <if test="catLevel != null  ">cat_level = #{catLevel,jdbcType=INTEGER},</if>
+                    <if test="showStatus != null  ">show_status = #{showStatus,jdbcType=TINYINT},</if>
+                    <if test="sort != null  ">sort = #{sort,jdbcType=INTEGER},</if>
+                    <if test="icon != null  and icon != ''  ">icon = #{icon,jdbcType=CHAR},</if>
+                    <if test="productUnit != null  and productUnit != ''  ">product_unit = #{productUnit,jdbcType=CHAR},</if>
+                    <if test="productCount != null  ">product_count = #{productCount,jdbcType=INTEGER},</if>
+        </trim>
+        where cat_id = #{catId,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_category
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="name = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.name,jdbcType=CHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="parentCid = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.parentCid,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="catLevel = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.catLevel,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="showStatus = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.showStatus,jdbcType=TINYINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="sort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.sort,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="icon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.icon,jdbcType=CHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="productUnit = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.productUnit,jdbcType=CHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="productCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.productCount,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+        </trim>
+        where cat_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.catId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_category
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="name = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.name != null  and records.name != ''  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.name,jdbcType=CHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="parentCid = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.parentCid != null  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.parentCid,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="catLevel = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.catLevel != null  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.catLevel,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="showStatus = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.showStatus != null  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.showStatus,jdbcType=TINYINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="sort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.sort != null  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.sort,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="icon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.icon != null  and records.icon != ''  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.icon,jdbcType=CHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="productUnit = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.productUnit != null  and records.productUnit != ''  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.productUnit,jdbcType=CHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="productCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.productCount != null  " >
+                            when cat_id = #{records.catId,jdbcType=BIGINT} then #{records.productCount,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where cat_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.catId}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_category where cat_id = #{catId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_category where cat_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>
