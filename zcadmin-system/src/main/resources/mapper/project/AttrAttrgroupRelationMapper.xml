@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.AttrAttrgroupRelationMapper">
+    <resultMap type="AttrAttrgroupRelation" id="BaseResultMap">
+            <result property="id" jdbcType="BIGINT" column="id"/>
+            <result property="attrId" jdbcType="BIGINT" column="attr_id"/>
+            <result property="attrGroupId" jdbcType="BIGINT" column="attr_group_id"/>
+            <result property="attrSort" jdbcType="INTEGER" column="attr_sort"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+id,attr_id,attr_group_id,attr_sort
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_attrgroup_relation
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_attrgroup_relation
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="attrId != null ">
+                and attr_id = #{attrId,jdbcType=BIGINT}
+            </if>
+            <if test="attrGroupId != null ">
+                and attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+            </if>
+            <if test="attrSort != null ">
+                and attr_sort = #{attrSort,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_attrgroup_relation
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.id != null ">
+                and id = #{record.id,jdbcType=BIGINT}
+            </if>
+            <if test="record.attrId != null ">
+                and attr_id = #{record.attrId,jdbcType=BIGINT}
+            </if>
+            <if test="record.attrGroupId != null ">
+                and attr_group_id = #{record.attrGroupId,jdbcType=BIGINT}
+            </if>
+            <if test="record.attrSort != null ">
+                and attr_sort = #{record.attrSort,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="AttrAttrgroupRelation">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_attrgroup_relation
+        where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_attr_attrgroup_relation
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="id != null ">
+        and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="attrId != null ">
+        and attr_id = #{attrId,jdbcType=BIGINT}
+        </if>
+        <if test="attrGroupId != null ">
+        and attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+        </if>
+        <if test="attrSort != null ">
+        and attr_sort = #{attrSort,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="AttrAttrgroupRelation"             useGeneratedKeys="true" keyProperty="id">
+        insert into pms_attr_attrgroup_relation (
+            id,
+            attr_id,
+            attr_group_id,
+            attr_sort
+    )
+        values
+        (         #{id,jdbcType=BIGINT},         #{attrId,jdbcType=BIGINT},         #{attrGroupId,jdbcType=BIGINT},         #{attrSort,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="AttrAttrgroupRelation"            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_attr_attrgroup_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="attrId != null  ">attr_id,</if>
+                    <if test="attrGroupId != null  ">attr_group_id,</if>
+                    <if test="attrSort != null  ">attr_sort,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="attrId != null  ">#{attrId,jdbcType=BIGINT},</if>
+                    <if test="attrGroupId != null  ">#{attrGroupId,jdbcType=BIGINT},</if>
+                    <if test="attrSort != null  ">#{attrSort,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="id">
+        insert into  pms_attr_attrgroup_relation (
+            id,
+            attr_id,
+            attr_group_id,
+            attr_sort
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.id,jdbcType=BIGINT},
+                #{record.attrId,jdbcType=BIGINT},
+                #{record.attrGroupId,jdbcType=BIGINT},
+                #{record.attrSort,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="AttrAttrgroupRelation">
+        update pms_attr_attrgroup_relation set
+                id =#{id,jdbcType=BIGINT} ,
+                attr_id =#{attrId,jdbcType=BIGINT} ,
+                attr_group_id =#{attrGroupId,jdbcType=BIGINT} ,
+                attr_sort =#{attrSort,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="AttrAttrgroupRelation">
+        update pms_attr_attrgroup_relation
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="attrId != null  ">attr_id = #{attrId,jdbcType=BIGINT},</if>
+                    <if test="attrGroupId != null  ">attr_group_id = #{attrGroupId,jdbcType=BIGINT},</if>
+                    <if test="attrSort != null  ">attr_sort = #{attrSort,jdbcType=INTEGER},</if>
+        </trim>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_attr_attrgroup_relation
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="attrId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrGroupId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrGroupId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrSort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrSort,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_attr_attrgroup_relation
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="attrId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrGroupId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrGroupId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrGroupId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrSort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrSort != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrSort,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_attr_attrgroup_relation where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_attr_attrgroup_relation where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

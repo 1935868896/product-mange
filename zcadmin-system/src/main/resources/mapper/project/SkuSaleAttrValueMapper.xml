@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.SkuSaleAttrValueMapper">
+    <resultMap type="SkuSaleAttrValue" id="BaseResultMap">
+            <result property="id" jdbcType="BIGINT" column="id"/>
+            <result property="skuId" jdbcType="BIGINT" column="sku_id"/>
+            <result property="attrId" jdbcType="BIGINT" column="attr_id"/>
+            <result property="attrName" jdbcType="VARCHAR" column="attr_name"/>
+            <result property="attrValue" jdbcType="VARCHAR" column="attr_value"/>
+            <result property="attrSort" jdbcType="INTEGER" column="attr_sort"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+id,sku_id,attr_id,attr_name,attr_value,attr_sort
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_sale_attr_value
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_sale_attr_value
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="skuId != null ">
+                and sku_id = #{skuId,jdbcType=BIGINT}
+            </if>
+            <if test="attrId != null ">
+                and attr_id = #{attrId,jdbcType=BIGINT}
+            </if>
+            <if test="attrName != null  and attrName != '' ">
+                and attr_name = #{attrName,jdbcType=VARCHAR}
+            </if>
+            <if test="attrValue != null  and attrValue != '' ">
+                and attr_value = #{attrValue,jdbcType=VARCHAR}
+            </if>
+            <if test="attrSort != null ">
+                and attr_sort = #{attrSort,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_sale_attr_value
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.id != null ">
+                and id = #{record.id,jdbcType=BIGINT}
+            </if>
+            <if test="record.skuId != null ">
+                and sku_id = #{record.skuId,jdbcType=BIGINT}
+            </if>
+            <if test="record.attrId != null ">
+                and attr_id = #{record.attrId,jdbcType=BIGINT}
+            </if>
+            <if test="record.attrName != null  and record.attrName != '' ">
+                and attr_name = #{record.attrName,jdbcType=VARCHAR}
+            </if>
+            <if test="record.attrValue != null  and record.attrValue != '' ">
+                and attr_value = #{record.attrValue,jdbcType=VARCHAR}
+            </if>
+            <if test="record.attrSort != null ">
+                and attr_sort = #{record.attrSort,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="SkuSaleAttrValue">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_sale_attr_value
+        where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_sku_sale_attr_value
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="id != null ">
+        and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="skuId != null ">
+        and sku_id = #{skuId,jdbcType=BIGINT}
+        </if>
+        <if test="attrId != null ">
+        and attr_id = #{attrId,jdbcType=BIGINT}
+        </if>
+        <if test="attrName != null  and attrName != '' ">
+        and attr_name = #{attrName,jdbcType=VARCHAR}
+        </if>
+        <if test="attrValue != null  and attrValue != '' ">
+        and attr_value = #{attrValue,jdbcType=VARCHAR}
+        </if>
+        <if test="attrSort != null ">
+        and attr_sort = #{attrSort,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="SkuSaleAttrValue"             useGeneratedKeys="true" keyProperty="id">
+        insert into pms_sku_sale_attr_value (
+            id,
+            sku_id,
+            attr_id,
+            attr_name,
+            attr_value,
+            attr_sort
+    )
+        values
+        (         #{id,jdbcType=BIGINT},         #{skuId,jdbcType=BIGINT},         #{attrId,jdbcType=BIGINT},         #{attrName,jdbcType=VARCHAR},         #{attrValue,jdbcType=VARCHAR},         #{attrSort,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="SkuSaleAttrValue"            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_sku_sale_attr_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="skuId != null  ">sku_id,</if>
+                    <if test="attrId != null  ">attr_id,</if>
+                    <if test="attrName != null  and attrName != ''  ">attr_name,</if>
+                    <if test="attrValue != null  and attrValue != ''  ">attr_value,</if>
+                    <if test="attrSort != null  ">attr_sort,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="skuId != null  ">#{skuId,jdbcType=BIGINT},</if>
+                    <if test="attrId != null  ">#{attrId,jdbcType=BIGINT},</if>
+                    <if test="attrName != null  and attrName != ''  ">#{attrName,jdbcType=VARCHAR},</if>
+                    <if test="attrValue != null  and attrValue != ''  ">#{attrValue,jdbcType=VARCHAR},</if>
+                    <if test="attrSort != null  ">#{attrSort,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="id">
+        insert into  pms_sku_sale_attr_value (
+            id,
+            sku_id,
+            attr_id,
+            attr_name,
+            attr_value,
+            attr_sort
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.id,jdbcType=BIGINT},
+                #{record.skuId,jdbcType=BIGINT},
+                #{record.attrId,jdbcType=BIGINT},
+                #{record.attrName,jdbcType=VARCHAR},
+                #{record.attrValue,jdbcType=VARCHAR},
+                #{record.attrSort,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="SkuSaleAttrValue">
+        update pms_sku_sale_attr_value set
+                id =#{id,jdbcType=BIGINT} ,
+                sku_id =#{skuId,jdbcType=BIGINT} ,
+                attr_id =#{attrId,jdbcType=BIGINT} ,
+                attr_name =#{attrName,jdbcType=VARCHAR} ,
+                attr_value =#{attrValue,jdbcType=VARCHAR} ,
+                attr_sort =#{attrSort,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="SkuSaleAttrValue">
+        update pms_sku_sale_attr_value
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="skuId != null  ">sku_id = #{skuId,jdbcType=BIGINT},</if>
+                    <if test="attrId != null  ">attr_id = #{attrId,jdbcType=BIGINT},</if>
+                    <if test="attrName != null  and attrName != ''  ">attr_name = #{attrName,jdbcType=VARCHAR},</if>
+                    <if test="attrValue != null  and attrValue != ''  ">attr_value = #{attrValue,jdbcType=VARCHAR},</if>
+                    <if test="attrSort != null  ">attr_sort = #{attrSort,jdbcType=INTEGER},</if>
+        </trim>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_sku_sale_attr_value
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="skuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.skuId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrName,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrValue = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrValue,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrSort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrSort,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_sku_sale_attr_value
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="skuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.skuId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.skuId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrName != null  and records.attrName != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrName,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrValue = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrValue != null  and records.attrValue != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrValue,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrSort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrSort != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.attrSort,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_sku_sale_attr_value where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_sku_sale_attr_value where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.AttrMapper">
+    <resultMap type="Attr" id="BaseResultMap">
+            <result property="attrId" jdbcType="BIGINT" column="attr_id"/>
+            <result property="attrName" jdbcType="CHAR" column="attr_name"/>
+            <result property="searchType" jdbcType="INTEGER" column="search_type"/>
+            <result property="icon" jdbcType="VARCHAR" column="icon"/>
+            <result property="valueSelect" jdbcType="CHAR" column="value_select"/>
+            <result property="attrType" jdbcType="INTEGER" column="attr_type"/>
+            <result property="enable" jdbcType="BIGINT" column="enable"/>
+            <result property="catelogId" jdbcType="BIGINT" column="catelog_id"/>
+            <result property="showDesc" jdbcType="INTEGER" column="show_desc"/>
+            <result property="valueType" jdbcType="INTEGER" column="value_type"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+attr_id,attr_name,search_type,icon,value_select,attr_type,enable,catelog_id,show_desc,value_type
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr
+        where attr_id = #{attrId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="attrId != null ">
+                and attr_id = #{attrId,jdbcType=BIGINT}
+            </if>
+            <if test="attrName != null  and attrName != '' ">
+                and attr_name = #{attrName,jdbcType=CHAR}
+            </if>
+            <if test="searchType != null ">
+                and search_type = #{searchType,jdbcType=INTEGER}
+            </if>
+            <if test="icon != null  and icon != '' ">
+                and icon = #{icon,jdbcType=VARCHAR}
+            </if>
+            <if test="valueSelect != null  and valueSelect != '' ">
+                and value_select = #{valueSelect,jdbcType=CHAR}
+            </if>
+            <if test="attrType != null ">
+                and attr_type = #{attrType,jdbcType=INTEGER}
+            </if>
+            <if test="enable != null ">
+                and enable = #{enable,jdbcType=BIGINT}
+            </if>
+            <if test="catelogId != null ">
+                and catelog_id = #{catelogId,jdbcType=BIGINT}
+            </if>
+            <if test="showDesc != null ">
+                and show_desc = #{showDesc,jdbcType=INTEGER}
+            </if>
+            <if test="valueType != null ">
+                and value_type = #{valueType,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.attrId != null ">
+                and attr_id = #{record.attrId,jdbcType=BIGINT}
+            </if>
+            <if test="record.attrName != null  and record.attrName != '' ">
+                and attr_name = #{record.attrName,jdbcType=CHAR}
+            </if>
+            <if test="record.searchType != null ">
+                and search_type = #{record.searchType,jdbcType=INTEGER}
+            </if>
+            <if test="record.icon != null  and record.icon != '' ">
+                and icon = #{record.icon,jdbcType=VARCHAR}
+            </if>
+            <if test="record.valueSelect != null  and record.valueSelect != '' ">
+                and value_select = #{record.valueSelect,jdbcType=CHAR}
+            </if>
+            <if test="record.attrType != null ">
+                and attr_type = #{record.attrType,jdbcType=INTEGER}
+            </if>
+            <if test="record.enable != null ">
+                and enable = #{record.enable,jdbcType=BIGINT}
+            </if>
+            <if test="record.catelogId != null ">
+                and catelog_id = #{record.catelogId,jdbcType=BIGINT}
+            </if>
+            <if test="record.showDesc != null ">
+                and show_desc = #{record.showDesc,jdbcType=INTEGER}
+            </if>
+            <if test="record.valueType != null ">
+                and value_type = #{record.valueType,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="Attr">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr
+        where attr_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_attr
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="attrId != null ">
+        and attr_id = #{attrId,jdbcType=BIGINT}
+        </if>
+        <if test="attrName != null  and attrName != '' ">
+        and attr_name = #{attrName,jdbcType=CHAR}
+        </if>
+        <if test="searchType != null ">
+        and search_type = #{searchType,jdbcType=INTEGER}
+        </if>
+        <if test="icon != null  and icon != '' ">
+        and icon = #{icon,jdbcType=VARCHAR}
+        </if>
+        <if test="valueSelect != null  and valueSelect != '' ">
+        and value_select = #{valueSelect,jdbcType=CHAR}
+        </if>
+        <if test="attrType != null ">
+        and attr_type = #{attrType,jdbcType=INTEGER}
+        </if>
+        <if test="enable != null ">
+        and enable = #{enable,jdbcType=BIGINT}
+        </if>
+        <if test="catelogId != null ">
+        and catelog_id = #{catelogId,jdbcType=BIGINT}
+        </if>
+        <if test="showDesc != null ">
+        and show_desc = #{showDesc,jdbcType=INTEGER}
+        </if>
+        <if test="valueType != null ">
+        and value_type = #{valueType,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="Attr"             useGeneratedKeys="true" keyProperty="attrId">
+        insert into pms_attr (
+            attr_id,
+            attr_name,
+            search_type,
+            icon,
+            value_select,
+            attr_type,
+            enable,
+            catelog_id,
+            show_desc,
+            value_type
+    )
+        values
+        (         #{attrId,jdbcType=BIGINT},         #{attrName,jdbcType=CHAR},         #{searchType,jdbcType=INTEGER},         #{icon,jdbcType=VARCHAR},         #{valueSelect,jdbcType=CHAR},         #{attrType,jdbcType=INTEGER},         #{enable,jdbcType=BIGINT},         #{catelogId,jdbcType=BIGINT},         #{showDesc,jdbcType=INTEGER},         #{valueType,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="Attr"            useGeneratedKeys="true" keyProperty="attrId">
+        insert into pms_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="attrName != null  and attrName != ''  ">attr_name,</if>
+                    <if test="searchType != null  ">search_type,</if>
+                    <if test="icon != null  and icon != ''  ">icon,</if>
+                    <if test="valueSelect != null  and valueSelect != ''  ">value_select,</if>
+                    <if test="attrType != null  ">attr_type,</if>
+                    <if test="enable != null  ">enable,</if>
+                    <if test="catelogId != null  ">catelog_id,</if>
+                    <if test="showDesc != null  ">show_desc,</if>
+                    <if test="valueType != null  ">value_type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="attrName != null  and attrName != ''  ">#{attrName,jdbcType=CHAR},</if>
+                    <if test="searchType != null  ">#{searchType,jdbcType=INTEGER},</if>
+                    <if test="icon != null  and icon != ''  ">#{icon,jdbcType=VARCHAR},</if>
+                    <if test="valueSelect != null  and valueSelect != ''  ">#{valueSelect,jdbcType=CHAR},</if>
+                    <if test="attrType != null  ">#{attrType,jdbcType=INTEGER},</if>
+                    <if test="enable != null  ">#{enable,jdbcType=BIGINT},</if>
+                    <if test="catelogId != null  ">#{catelogId,jdbcType=BIGINT},</if>
+                    <if test="showDesc != null  ">#{showDesc,jdbcType=INTEGER},</if>
+                    <if test="valueType != null  ">#{valueType,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="attrId">
+        insert into  pms_attr (
+            attr_id,
+            attr_name,
+            search_type,
+            icon,
+            value_select,
+            attr_type,
+            enable,
+            catelog_id,
+            show_desc,
+            value_type
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.attrId,jdbcType=BIGINT},
+                #{record.attrName,jdbcType=CHAR},
+                #{record.searchType,jdbcType=INTEGER},
+                #{record.icon,jdbcType=VARCHAR},
+                #{record.valueSelect,jdbcType=CHAR},
+                #{record.attrType,jdbcType=INTEGER},
+                #{record.enable,jdbcType=BIGINT},
+                #{record.catelogId,jdbcType=BIGINT},
+                #{record.showDesc,jdbcType=INTEGER},
+                #{record.valueType,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Attr">
+        update pms_attr set
+                attr_id =#{attrId,jdbcType=BIGINT} ,
+                attr_name =#{attrName,jdbcType=CHAR} ,
+                search_type =#{searchType,jdbcType=INTEGER} ,
+                icon =#{icon,jdbcType=VARCHAR} ,
+                value_select =#{valueSelect,jdbcType=CHAR} ,
+                attr_type =#{attrType,jdbcType=INTEGER} ,
+                enable =#{enable,jdbcType=BIGINT} ,
+                catelog_id =#{catelogId,jdbcType=BIGINT} ,
+                show_desc =#{showDesc,jdbcType=INTEGER} ,
+                value_type =#{valueType,jdbcType=INTEGER} 
+        where attr_id = #{attrId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="Attr">
+        update pms_attr
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="attrName != null  and attrName != ''  ">attr_name = #{attrName,jdbcType=CHAR},</if>
+                    <if test="searchType != null  ">search_type = #{searchType,jdbcType=INTEGER},</if>
+                    <if test="icon != null  and icon != ''  ">icon = #{icon,jdbcType=VARCHAR},</if>
+                    <if test="valueSelect != null  and valueSelect != ''  ">value_select = #{valueSelect,jdbcType=CHAR},</if>
+                    <if test="attrType != null  ">attr_type = #{attrType,jdbcType=INTEGER},</if>
+                    <if test="enable != null  ">enable = #{enable,jdbcType=BIGINT},</if>
+                    <if test="catelogId != null  ">catelog_id = #{catelogId,jdbcType=BIGINT},</if>
+                    <if test="showDesc != null  ">show_desc = #{showDesc,jdbcType=INTEGER},</if>
+                    <if test="valueType != null  ">value_type = #{valueType,jdbcType=INTEGER},</if>
+        </trim>
+        where attr_id = #{attrId,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_attr
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="attrName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.attrName,jdbcType=CHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="searchType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.searchType,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="icon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.icon,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="valueSelect = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.valueSelect,jdbcType=CHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.attrType,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="enable = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.enable,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.catelogId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="showDesc = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.showDesc,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="valueType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.valueType,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+        </trim>
+        where attr_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.attrId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_attr
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="attrName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrName != null  and records.attrName != ''  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.attrName,jdbcType=CHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="searchType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.searchType != null  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.searchType,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="icon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.icon != null  and records.icon != ''  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.icon,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="valueSelect = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.valueSelect != null  and records.valueSelect != ''  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.valueSelect,jdbcType=CHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="attrType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrType != null  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.attrType,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="enable = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.enable != null  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.enable,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.catelogId != null  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.catelogId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="showDesc = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.showDesc != null  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.showDesc,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="valueType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.valueType != null  " >
+                            when attr_id = #{records.attrId,jdbcType=BIGINT} then #{records.valueType,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where attr_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.attrId}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_attr where attr_id = #{attrId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_attr where attr_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

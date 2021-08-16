@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.SpuCommentMapper">
+    <resultMap type="SpuComment" id="BaseResultMap">
+            <result property="id" jdbcType="BIGINT" column="id"/>
+            <result property="skuId" jdbcType="BIGINT" column="sku_id"/>
+            <result property="spuId" jdbcType="BIGINT" column="spu_id"/>
+            <result property="spuName" jdbcType="VARCHAR" column="spu_name"/>
+            <result property="memberNickName" jdbcType="VARCHAR" column="member_nick_name"/>
+            <result property="star" jdbcType="INTEGER" column="star"/>
+            <result property="memberIp" jdbcType="VARCHAR" column="member_ip"/>
+            <result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
+            <result property="showStatus" jdbcType="INTEGER" column="show_status"/>
+            <result property="spuAttributes" jdbcType="VARCHAR" column="spu_attributes"/>
+            <result property="likesCount" jdbcType="INTEGER" column="likes_count"/>
+            <result property="replyCount" jdbcType="INTEGER" column="reply_count"/>
+            <result property="resources" jdbcType="VARCHAR" column="resources"/>
+            <result property="content" jdbcType="VARCHAR" column="content"/>
+            <result property="memberIcon" jdbcType="VARCHAR" column="member_icon"/>
+            <result property="commentType" jdbcType="INTEGER" column="comment_type"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+id,sku_id,spu_id,spu_name,member_nick_name,star,member_ip,create_time,show_status,spu_attributes,likes_count,reply_count,resources,content,member_icon,comment_type
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_comment
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_comment
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="skuId != null ">
+                and sku_id = #{skuId,jdbcType=BIGINT}
+            </if>
+            <if test="spuId != null ">
+                and spu_id = #{spuId,jdbcType=BIGINT}
+            </if>
+            <if test="spuName != null  and spuName != '' ">
+                and spu_name = #{spuName,jdbcType=VARCHAR}
+            </if>
+            <if test="memberNickName != null  and memberNickName != '' ">
+                and member_nick_name = #{memberNickName,jdbcType=VARCHAR}
+            </if>
+            <if test="star != null ">
+                and star = #{star,jdbcType=INTEGER}
+            </if>
+            <if test="memberIp != null  and memberIp != '' ">
+                and member_ip = #{memberIp,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null ">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="showStatus != null ">
+                and show_status = #{showStatus,jdbcType=INTEGER}
+            </if>
+            <if test="spuAttributes != null  and spuAttributes != '' ">
+                and spu_attributes = #{spuAttributes,jdbcType=VARCHAR}
+            </if>
+            <if test="likesCount != null ">
+                and likes_count = #{likesCount,jdbcType=INTEGER}
+            </if>
+            <if test="replyCount != null ">
+                and reply_count = #{replyCount,jdbcType=INTEGER}
+            </if>
+            <if test="resources != null  and resources != '' ">
+                and resources = #{resources,jdbcType=VARCHAR}
+            </if>
+            <if test="content != null  and content != '' ">
+                and content = #{content,jdbcType=VARCHAR}
+            </if>
+            <if test="memberIcon != null  and memberIcon != '' ">
+                and member_icon = #{memberIcon,jdbcType=VARCHAR}
+            </if>
+            <if test="commentType != null ">
+                and comment_type = #{commentType,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_comment
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.id != null ">
+                and id = #{record.id,jdbcType=BIGINT}
+            </if>
+            <if test="record.skuId != null ">
+                and sku_id = #{record.skuId,jdbcType=BIGINT}
+            </if>
+            <if test="record.spuId != null ">
+                and spu_id = #{record.spuId,jdbcType=BIGINT}
+            </if>
+            <if test="record.spuName != null  and record.spuName != '' ">
+                and spu_name = #{record.spuName,jdbcType=VARCHAR}
+            </if>
+            <if test="record.memberNickName != null  and record.memberNickName != '' ">
+                and member_nick_name = #{record.memberNickName,jdbcType=VARCHAR}
+            </if>
+            <if test="record.star != null ">
+                and star = #{record.star,jdbcType=INTEGER}
+            </if>
+            <if test="record.memberIp != null  and record.memberIp != '' ">
+                and member_ip = #{record.memberIp,jdbcType=VARCHAR}
+            </if>
+            <if test="record.createTime != null ">
+                and create_time = #{record.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="record.showStatus != null ">
+                and show_status = #{record.showStatus,jdbcType=INTEGER}
+            </if>
+            <if test="record.spuAttributes != null  and record.spuAttributes != '' ">
+                and spu_attributes = #{record.spuAttributes,jdbcType=VARCHAR}
+            </if>
+            <if test="record.likesCount != null ">
+                and likes_count = #{record.likesCount,jdbcType=INTEGER}
+            </if>
+            <if test="record.replyCount != null ">
+                and reply_count = #{record.replyCount,jdbcType=INTEGER}
+            </if>
+            <if test="record.resources != null  and record.resources != '' ">
+                and resources = #{record.resources,jdbcType=VARCHAR}
+            </if>
+            <if test="record.content != null  and record.content != '' ">
+                and content = #{record.content,jdbcType=VARCHAR}
+            </if>
+            <if test="record.memberIcon != null  and record.memberIcon != '' ">
+                and member_icon = #{record.memberIcon,jdbcType=VARCHAR}
+            </if>
+            <if test="record.commentType != null ">
+                and comment_type = #{record.commentType,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="SpuComment">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_comment
+        where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_spu_comment
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="id != null ">
+        and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="skuId != null ">
+        and sku_id = #{skuId,jdbcType=BIGINT}
+        </if>
+        <if test="spuId != null ">
+        and spu_id = #{spuId,jdbcType=BIGINT}
+        </if>
+        <if test="spuName != null  and spuName != '' ">
+        and spu_name = #{spuName,jdbcType=VARCHAR}
+        </if>
+        <if test="memberNickName != null  and memberNickName != '' ">
+        and member_nick_name = #{memberNickName,jdbcType=VARCHAR}
+        </if>
+        <if test="star != null ">
+        and star = #{star,jdbcType=INTEGER}
+        </if>
+        <if test="memberIp != null  and memberIp != '' ">
+        and member_ip = #{memberIp,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null ">
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="showStatus != null ">
+        and show_status = #{showStatus,jdbcType=INTEGER}
+        </if>
+        <if test="spuAttributes != null  and spuAttributes != '' ">
+        and spu_attributes = #{spuAttributes,jdbcType=VARCHAR}
+        </if>
+        <if test="likesCount != null ">
+        and likes_count = #{likesCount,jdbcType=INTEGER}
+        </if>
+        <if test="replyCount != null ">
+        and reply_count = #{replyCount,jdbcType=INTEGER}
+        </if>
+        <if test="resources != null  and resources != '' ">
+        and resources = #{resources,jdbcType=VARCHAR}
+        </if>
+        <if test="content != null  and content != '' ">
+        and content = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="memberIcon != null  and memberIcon != '' ">
+        and member_icon = #{memberIcon,jdbcType=VARCHAR}
+        </if>
+        <if test="commentType != null ">
+        and comment_type = #{commentType,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="SpuComment"             useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_comment (
+            id,
+            sku_id,
+            spu_id,
+            spu_name,
+            member_nick_name,
+            star,
+            member_ip,
+            create_time,
+            show_status,
+            spu_attributes,
+            likes_count,
+            reply_count,
+            resources,
+            content,
+            member_icon,
+            comment_type
+    )
+        values
+        (         #{id,jdbcType=BIGINT},         #{skuId,jdbcType=BIGINT},         #{spuId,jdbcType=BIGINT},         #{spuName,jdbcType=VARCHAR},         #{memberNickName,jdbcType=VARCHAR},         #{star,jdbcType=INTEGER},         #{memberIp,jdbcType=VARCHAR},         #{createTime,jdbcType=TIMESTAMP},         #{showStatus,jdbcType=INTEGER},         #{spuAttributes,jdbcType=VARCHAR},         #{likesCount,jdbcType=INTEGER},         #{replyCount,jdbcType=INTEGER},         #{resources,jdbcType=VARCHAR},         #{content,jdbcType=VARCHAR},         #{memberIcon,jdbcType=VARCHAR},         #{commentType,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="SpuComment"            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="skuId != null  ">sku_id,</if>
+                    <if test="spuId != null  ">spu_id,</if>
+                    <if test="spuName != null  and spuName != ''  ">spu_name,</if>
+                    <if test="memberNickName != null  and memberNickName != ''  ">member_nick_name,</if>
+                    <if test="star != null  ">star,</if>
+                    <if test="memberIp != null  and memberIp != ''  ">member_ip,</if>
+                    <if test="createTime != null  ">create_time,</if>
+                    <if test="showStatus != null  ">show_status,</if>
+                    <if test="spuAttributes != null  and spuAttributes != ''  ">spu_attributes,</if>
+                    <if test="likesCount != null  ">likes_count,</if>
+                    <if test="replyCount != null  ">reply_count,</if>
+                    <if test="resources != null  and resources != ''  ">resources,</if>
+                    <if test="content != null  and content != ''  ">content,</if>
+                    <if test="memberIcon != null  and memberIcon != ''  ">member_icon,</if>
+                    <if test="commentType != null  ">comment_type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="skuId != null  ">#{skuId,jdbcType=BIGINT},</if>
+                    <if test="spuId != null  ">#{spuId,jdbcType=BIGINT},</if>
+                    <if test="spuName != null  and spuName != ''  ">#{spuName,jdbcType=VARCHAR},</if>
+                    <if test="memberNickName != null  and memberNickName != ''  ">#{memberNickName,jdbcType=VARCHAR},</if>
+                    <if test="star != null  ">#{star,jdbcType=INTEGER},</if>
+                    <if test="memberIp != null  and memberIp != ''  ">#{memberIp,jdbcType=VARCHAR},</if>
+                    <if test="createTime != null  ">#{createTime,jdbcType=TIMESTAMP},</if>
+                    <if test="showStatus != null  ">#{showStatus,jdbcType=INTEGER},</if>
+                    <if test="spuAttributes != null  and spuAttributes != ''  ">#{spuAttributes,jdbcType=VARCHAR},</if>
+                    <if test="likesCount != null  ">#{likesCount,jdbcType=INTEGER},</if>
+                    <if test="replyCount != null  ">#{replyCount,jdbcType=INTEGER},</if>
+                    <if test="resources != null  and resources != ''  ">#{resources,jdbcType=VARCHAR},</if>
+                    <if test="content != null  and content != ''  ">#{content,jdbcType=VARCHAR},</if>
+                    <if test="memberIcon != null  and memberIcon != ''  ">#{memberIcon,jdbcType=VARCHAR},</if>
+                    <if test="commentType != null  ">#{commentType,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="id">
+        insert into  pms_spu_comment (
+            id,
+            sku_id,
+            spu_id,
+            spu_name,
+            member_nick_name,
+            star,
+            member_ip,
+            create_time,
+            show_status,
+            spu_attributes,
+            likes_count,
+            reply_count,
+            resources,
+            content,
+            member_icon,
+            comment_type
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.id,jdbcType=BIGINT},
+                #{record.skuId,jdbcType=BIGINT},
+                #{record.spuId,jdbcType=BIGINT},
+                #{record.spuName,jdbcType=VARCHAR},
+                #{record.memberNickName,jdbcType=VARCHAR},
+                #{record.star,jdbcType=INTEGER},
+                #{record.memberIp,jdbcType=VARCHAR},
+                #{record.createTime,jdbcType=TIMESTAMP},
+                #{record.showStatus,jdbcType=INTEGER},
+                #{record.spuAttributes,jdbcType=VARCHAR},
+                #{record.likesCount,jdbcType=INTEGER},
+                #{record.replyCount,jdbcType=INTEGER},
+                #{record.resources,jdbcType=VARCHAR},
+                #{record.content,jdbcType=VARCHAR},
+                #{record.memberIcon,jdbcType=VARCHAR},
+                #{record.commentType,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="SpuComment">
+        update pms_spu_comment set
+                id =#{id,jdbcType=BIGINT} ,
+                sku_id =#{skuId,jdbcType=BIGINT} ,
+                spu_id =#{spuId,jdbcType=BIGINT} ,
+                spu_name =#{spuName,jdbcType=VARCHAR} ,
+                member_nick_name =#{memberNickName,jdbcType=VARCHAR} ,
+                star =#{star,jdbcType=INTEGER} ,
+                member_ip =#{memberIp,jdbcType=VARCHAR} ,
+                create_time =#{createTime,jdbcType=TIMESTAMP} ,
+                show_status =#{showStatus,jdbcType=INTEGER} ,
+                spu_attributes =#{spuAttributes,jdbcType=VARCHAR} ,
+                likes_count =#{likesCount,jdbcType=INTEGER} ,
+                reply_count =#{replyCount,jdbcType=INTEGER} ,
+                resources =#{resources,jdbcType=VARCHAR} ,
+                content =#{content,jdbcType=VARCHAR} ,
+                member_icon =#{memberIcon,jdbcType=VARCHAR} ,
+                comment_type =#{commentType,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="SpuComment">
+        update pms_spu_comment
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="skuId != null  ">sku_id = #{skuId,jdbcType=BIGINT},</if>
+                    <if test="spuId != null  ">spu_id = #{spuId,jdbcType=BIGINT},</if>
+                    <if test="spuName != null  and spuName != ''  ">spu_name = #{spuName,jdbcType=VARCHAR},</if>
+                    <if test="memberNickName != null  and memberNickName != ''  ">member_nick_name = #{memberNickName,jdbcType=VARCHAR},</if>
+                    <if test="star != null  ">star = #{star,jdbcType=INTEGER},</if>
+                    <if test="memberIp != null  and memberIp != ''  ">member_ip = #{memberIp,jdbcType=VARCHAR},</if>
+                    <if test="createTime != null  ">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+                    <if test="showStatus != null  ">show_status = #{showStatus,jdbcType=INTEGER},</if>
+                    <if test="spuAttributes != null  and spuAttributes != ''  ">spu_attributes = #{spuAttributes,jdbcType=VARCHAR},</if>
+                    <if test="likesCount != null  ">likes_count = #{likesCount,jdbcType=INTEGER},</if>
+                    <if test="replyCount != null  ">reply_count = #{replyCount,jdbcType=INTEGER},</if>
+                    <if test="resources != null  and resources != ''  ">resources = #{resources,jdbcType=VARCHAR},</if>
+                    <if test="content != null  and content != ''  ">content = #{content,jdbcType=VARCHAR},</if>
+                    <if test="memberIcon != null  and memberIcon != ''  ">member_icon = #{memberIcon,jdbcType=VARCHAR},</if>
+                    <if test="commentType != null  ">comment_type = #{commentType,jdbcType=INTEGER},</if>
+        </trim>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_spu_comment
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="skuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.skuId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="spuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="spuName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuName,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="memberNickName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.memberNickName,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="star = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.star,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="memberIp = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.memberIp,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="createTime = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.createTime,jdbcType=TIMESTAMP}
+                        </foreach>
+                    </trim>
+                    <trim prefix="showStatus = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.showStatus,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="spuAttributes = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuAttributes,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="likesCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.likesCount,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="replyCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.replyCount,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="resources = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.resources,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="content = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.content,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="memberIcon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.memberIcon,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="commentType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.commentType,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_spu_comment
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="skuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.skuId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.skuId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="spuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.spuId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="spuName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.spuName != null  and records.spuName != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuName,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="memberNickName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.memberNickName != null  and records.memberNickName != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.memberNickName,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="star = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.star != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.star,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="memberIp = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.memberIp != null  and records.memberIp != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.memberIp,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="createTime = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.createTime != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.createTime,jdbcType=TIMESTAMP}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="showStatus = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.showStatus != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.showStatus,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="spuAttributes = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.spuAttributes != null  and records.spuAttributes != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuAttributes,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="likesCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.likesCount != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.likesCount,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="replyCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.replyCount != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.replyCount,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="resources = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.resources != null  and records.resources != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.resources,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="content = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.content != null  and records.content != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.content,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="memberIcon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.memberIcon != null  and records.memberIcon != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.memberIcon,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="commentType = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.commentType != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.commentType,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_spu_comment where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_spu_comment where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

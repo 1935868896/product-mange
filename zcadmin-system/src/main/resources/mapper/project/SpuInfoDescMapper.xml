@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.SpuInfoDescMapper">
+    <resultMap type="SpuInfoDesc" id="BaseResultMap">
+            <result property="spuId" jdbcType="BIGINT" column="spu_id"/>
+            <result property="decript" jdbcType="VARCHAR" column="decript"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+spu_id,decript
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_info_desc
+        where spu_id = #{spuId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_info_desc
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="spuId != null ">
+                and spu_id = #{spuId,jdbcType=BIGINT}
+            </if>
+            <if test="decript != null  and decript != '' ">
+                and decript = #{decript,jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_info_desc
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.spuId != null ">
+                and spu_id = #{record.spuId,jdbcType=BIGINT}
+            </if>
+            <if test="record.decript != null  and record.decript != '' ">
+                and decript = #{record.decript,jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="SpuInfoDesc">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_info_desc
+        where spu_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_spu_info_desc
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="spuId != null ">
+        and spu_id = #{spuId,jdbcType=BIGINT}
+        </if>
+        <if test="decript != null  and decript != '' ">
+        and decript = #{decript,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="SpuInfoDesc"             useGeneratedKeys="true" keyProperty="spuId">
+        insert into pms_spu_info_desc (
+            spu_id,
+            decript
+    )
+        values
+        (         #{spuId,jdbcType=BIGINT},         #{decript,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="SpuInfoDesc"            useGeneratedKeys="true" keyProperty="spuId">
+        insert into pms_spu_info_desc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="decript != null  and decript != ''  ">decript,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="decript != null  and decript != ''  ">#{decript,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="spuId">
+        insert into  pms_spu_info_desc (
+            spu_id,
+            decript
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.spuId,jdbcType=BIGINT},
+                #{record.decript,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="SpuInfoDesc">
+        update pms_spu_info_desc set
+                spu_id =#{spuId,jdbcType=BIGINT} ,
+                decript =#{decript,jdbcType=VARCHAR} 
+        where spu_id = #{spuId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="SpuInfoDesc">
+        update pms_spu_info_desc
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="decript != null  and decript != ''  ">decript = #{decript,jdbcType=VARCHAR},</if>
+        </trim>
+        where spu_id = #{spuId,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_spu_info_desc
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="decript = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when spu_id = #{records.spuId,jdbcType=BIGINT} then #{records.decript,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+        </trim>
+        where spu_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.spuId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_spu_info_desc
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="decript = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.decript != null  and records.decript != ''  " >
+                            when spu_id = #{records.spuId,jdbcType=BIGINT} then #{records.decript,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where spu_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.spuId}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_spu_info_desc where spu_id = #{spuId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_spu_info_desc where spu_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

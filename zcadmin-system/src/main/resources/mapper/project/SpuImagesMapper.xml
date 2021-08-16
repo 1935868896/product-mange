@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.SpuImagesMapper">
+    <resultMap type="SpuImages" id="BaseResultMap">
+            <result property="id" jdbcType="BIGINT" column="id"/>
+            <result property="spuId" jdbcType="BIGINT" column="spu_id"/>
+            <result property="imgName" jdbcType="VARCHAR" column="img_name"/>
+            <result property="imgUrl" jdbcType="VARCHAR" column="img_url"/>
+            <result property="imgSort" jdbcType="INTEGER" column="img_sort"/>
+            <result property="defaultImg" jdbcType="INTEGER" column="default_img"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+id,spu_id,img_name,img_url,img_sort,default_img
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_images
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_images
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="spuId != null ">
+                and spu_id = #{spuId,jdbcType=BIGINT}
+            </if>
+            <if test="imgName != null  and imgName != '' ">
+                and img_name = #{imgName,jdbcType=VARCHAR}
+            </if>
+            <if test="imgUrl != null  and imgUrl != '' ">
+                and img_url = #{imgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="imgSort != null ">
+                and img_sort = #{imgSort,jdbcType=INTEGER}
+            </if>
+            <if test="defaultImg != null ">
+                and default_img = #{defaultImg,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_images
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.id != null ">
+                and id = #{record.id,jdbcType=BIGINT}
+            </if>
+            <if test="record.spuId != null ">
+                and spu_id = #{record.spuId,jdbcType=BIGINT}
+            </if>
+            <if test="record.imgName != null  and record.imgName != '' ">
+                and img_name = #{record.imgName,jdbcType=VARCHAR}
+            </if>
+            <if test="record.imgUrl != null  and record.imgUrl != '' ">
+                and img_url = #{record.imgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="record.imgSort != null ">
+                and img_sort = #{record.imgSort,jdbcType=INTEGER}
+            </if>
+            <if test="record.defaultImg != null ">
+                and default_img = #{record.defaultImg,jdbcType=INTEGER}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="SpuImages">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_spu_images
+        where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_spu_images
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="id != null ">
+        and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="spuId != null ">
+        and spu_id = #{spuId,jdbcType=BIGINT}
+        </if>
+        <if test="imgName != null  and imgName != '' ">
+        and img_name = #{imgName,jdbcType=VARCHAR}
+        </if>
+        <if test="imgUrl != null  and imgUrl != '' ">
+        and img_url = #{imgUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="imgSort != null ">
+        and img_sort = #{imgSort,jdbcType=INTEGER}
+        </if>
+        <if test="defaultImg != null ">
+        and default_img = #{defaultImg,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="SpuImages"             useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_images (
+            id,
+            spu_id,
+            img_name,
+            img_url,
+            img_sort,
+            default_img
+    )
+        values
+        (         #{id,jdbcType=BIGINT},         #{spuId,jdbcType=BIGINT},         #{imgName,jdbcType=VARCHAR},         #{imgUrl,jdbcType=VARCHAR},         #{imgSort,jdbcType=INTEGER},         #{defaultImg,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="SpuImages"            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_images
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="spuId != null  ">spu_id,</if>
+                    <if test="imgName != null  and imgName != ''  ">img_name,</if>
+                    <if test="imgUrl != null  and imgUrl != ''  ">img_url,</if>
+                    <if test="imgSort != null  ">img_sort,</if>
+                    <if test="defaultImg != null  ">default_img,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="spuId != null  ">#{spuId,jdbcType=BIGINT},</if>
+                    <if test="imgName != null  and imgName != ''  ">#{imgName,jdbcType=VARCHAR},</if>
+                    <if test="imgUrl != null  and imgUrl != ''  ">#{imgUrl,jdbcType=VARCHAR},</if>
+                    <if test="imgSort != null  ">#{imgSort,jdbcType=INTEGER},</if>
+                    <if test="defaultImg != null  ">#{defaultImg,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="id">
+        insert into  pms_spu_images (
+            id,
+            spu_id,
+            img_name,
+            img_url,
+            img_sort,
+            default_img
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.id,jdbcType=BIGINT},
+                #{record.spuId,jdbcType=BIGINT},
+                #{record.imgName,jdbcType=VARCHAR},
+                #{record.imgUrl,jdbcType=VARCHAR},
+                #{record.imgSort,jdbcType=INTEGER},
+                #{record.defaultImg,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="SpuImages">
+        update pms_spu_images set
+                id =#{id,jdbcType=BIGINT} ,
+                spu_id =#{spuId,jdbcType=BIGINT} ,
+                img_name =#{imgName,jdbcType=VARCHAR} ,
+                img_url =#{imgUrl,jdbcType=VARCHAR} ,
+                img_sort =#{imgSort,jdbcType=INTEGER} ,
+                default_img =#{defaultImg,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="SpuImages">
+        update pms_spu_images
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="spuId != null  ">spu_id = #{spuId,jdbcType=BIGINT},</if>
+                    <if test="imgName != null  and imgName != ''  ">img_name = #{imgName,jdbcType=VARCHAR},</if>
+                    <if test="imgUrl != null  and imgUrl != ''  ">img_url = #{imgUrl,jdbcType=VARCHAR},</if>
+                    <if test="imgSort != null  ">img_sort = #{imgSort,jdbcType=INTEGER},</if>
+                    <if test="defaultImg != null  ">default_img = #{defaultImg,jdbcType=INTEGER},</if>
+        </trim>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_spu_images
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="spuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="imgName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.imgName,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="imgUrl = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.imgUrl,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="imgSort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.imgSort,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="defaultImg = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.defaultImg,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_spu_images
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="spuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.spuId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.spuId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="imgName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.imgName != null  and records.imgName != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.imgName,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="imgUrl = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.imgUrl != null  and records.imgUrl != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.imgUrl,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="imgSort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.imgSort != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.imgSort,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="defaultImg = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.defaultImg != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.defaultImg,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_spu_images where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_spu_images where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

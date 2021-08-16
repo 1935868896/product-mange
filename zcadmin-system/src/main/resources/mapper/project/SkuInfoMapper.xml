@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.SkuInfoMapper">
+    <resultMap type="SkuInfo" id="BaseResultMap">
+            <result property="skuId" jdbcType="BIGINT" column="sku_id"/>
+            <result property="spuId" jdbcType="BIGINT" column="spu_id"/>
+            <result property="skuName" jdbcType="VARCHAR" column="sku_name"/>
+            <result property="skuDesc" jdbcType="VARCHAR" column="sku_desc"/>
+            <result property="catalogId" jdbcType="BIGINT" column="catalog_id"/>
+            <result property="brandId" jdbcType="BIGINT" column="brand_id"/>
+            <result property="skuDefaultImg" jdbcType="VARCHAR" column="sku_default_img"/>
+            <result property="skuTitle" jdbcType="VARCHAR" column="sku_title"/>
+            <result property="skuSubtitle" jdbcType="VARCHAR" column="sku_subtitle"/>
+            <result property="price" jdbcType="DECIMAL" column="price"/>
+            <result property="saleCount" jdbcType="BIGINT" column="sale_count"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+sku_id,spu_id,sku_name,sku_desc,catalog_id,brand_id,sku_default_img,sku_title,sku_subtitle,price,sale_count
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_info
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_info
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="skuId != null ">
+                and sku_id = #{skuId,jdbcType=BIGINT}
+            </if>
+            <if test="spuId != null ">
+                and spu_id = #{spuId,jdbcType=BIGINT}
+            </if>
+            <if test="skuName != null  and skuName != '' ">
+                and sku_name = #{skuName,jdbcType=VARCHAR}
+            </if>
+            <if test="skuDesc != null  and skuDesc != '' ">
+                and sku_desc = #{skuDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="catalogId != null ">
+                and catalog_id = #{catalogId,jdbcType=BIGINT}
+            </if>
+            <if test="brandId != null ">
+                and brand_id = #{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="skuDefaultImg != null  and skuDefaultImg != '' ">
+                and sku_default_img = #{skuDefaultImg,jdbcType=VARCHAR}
+            </if>
+            <if test="skuTitle != null  and skuTitle != '' ">
+                and sku_title = #{skuTitle,jdbcType=VARCHAR}
+            </if>
+            <if test="skuSubtitle != null  and skuSubtitle != '' ">
+                and sku_subtitle = #{skuSubtitle,jdbcType=VARCHAR}
+            </if>
+            <if test="price != null ">
+                and price = #{price,jdbcType=DECIMAL}
+            </if>
+            <if test="saleCount != null ">
+                and sale_count = #{saleCount,jdbcType=BIGINT}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_info
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.skuId != null ">
+                and sku_id = #{record.skuId,jdbcType=BIGINT}
+            </if>
+            <if test="record.spuId != null ">
+                and spu_id = #{record.spuId,jdbcType=BIGINT}
+            </if>
+            <if test="record.skuName != null  and record.skuName != '' ">
+                and sku_name = #{record.skuName,jdbcType=VARCHAR}
+            </if>
+            <if test="record.skuDesc != null  and record.skuDesc != '' ">
+                and sku_desc = #{record.skuDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="record.catalogId != null ">
+                and catalog_id = #{record.catalogId,jdbcType=BIGINT}
+            </if>
+            <if test="record.brandId != null ">
+                and brand_id = #{record.brandId,jdbcType=BIGINT}
+            </if>
+            <if test="record.skuDefaultImg != null  and record.skuDefaultImg != '' ">
+                and sku_default_img = #{record.skuDefaultImg,jdbcType=VARCHAR}
+            </if>
+            <if test="record.skuTitle != null  and record.skuTitle != '' ">
+                and sku_title = #{record.skuTitle,jdbcType=VARCHAR}
+            </if>
+            <if test="record.skuSubtitle != null  and record.skuSubtitle != '' ">
+                and sku_subtitle = #{record.skuSubtitle,jdbcType=VARCHAR}
+            </if>
+            <if test="record.price != null ">
+                and price = #{record.price,jdbcType=DECIMAL}
+            </if>
+            <if test="record.saleCount != null ">
+                and sale_count = #{record.saleCount,jdbcType=BIGINT}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="SkuInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sku_info
+        where sku_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_sku_info
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="skuId != null ">
+        and sku_id = #{skuId,jdbcType=BIGINT}
+        </if>
+        <if test="spuId != null ">
+        and spu_id = #{spuId,jdbcType=BIGINT}
+        </if>
+        <if test="skuName != null  and skuName != '' ">
+        and sku_name = #{skuName,jdbcType=VARCHAR}
+        </if>
+        <if test="skuDesc != null  and skuDesc != '' ">
+        and sku_desc = #{skuDesc,jdbcType=VARCHAR}
+        </if>
+        <if test="catalogId != null ">
+        and catalog_id = #{catalogId,jdbcType=BIGINT}
+        </if>
+        <if test="brandId != null ">
+        and brand_id = #{brandId,jdbcType=BIGINT}
+        </if>
+        <if test="skuDefaultImg != null  and skuDefaultImg != '' ">
+        and sku_default_img = #{skuDefaultImg,jdbcType=VARCHAR}
+        </if>
+        <if test="skuTitle != null  and skuTitle != '' ">
+        and sku_title = #{skuTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="skuSubtitle != null  and skuSubtitle != '' ">
+        and sku_subtitle = #{skuSubtitle,jdbcType=VARCHAR}
+        </if>
+        <if test="price != null ">
+        and price = #{price,jdbcType=DECIMAL}
+        </if>
+        <if test="saleCount != null ">
+        and sale_count = #{saleCount,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="SkuInfo"             useGeneratedKeys="true" keyProperty="skuId">
+        insert into pms_sku_info (
+            sku_id,
+            spu_id,
+            sku_name,
+            sku_desc,
+            catalog_id,
+            brand_id,
+            sku_default_img,
+            sku_title,
+            sku_subtitle,
+            price,
+            sale_count
+    )
+        values
+        (         #{skuId,jdbcType=BIGINT},         #{spuId,jdbcType=BIGINT},         #{skuName,jdbcType=VARCHAR},         #{skuDesc,jdbcType=VARCHAR},         #{catalogId,jdbcType=BIGINT},         #{brandId,jdbcType=BIGINT},         #{skuDefaultImg,jdbcType=VARCHAR},         #{skuTitle,jdbcType=VARCHAR},         #{skuSubtitle,jdbcType=VARCHAR},         #{price,jdbcType=DECIMAL},         #{saleCount,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="SkuInfo"            useGeneratedKeys="true" keyProperty="skuId">
+        insert into pms_sku_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="spuId != null  ">spu_id,</if>
+                    <if test="skuName != null  and skuName != ''  ">sku_name,</if>
+                    <if test="skuDesc != null  and skuDesc != ''  ">sku_desc,</if>
+                    <if test="catalogId != null  ">catalog_id,</if>
+                    <if test="brandId != null  ">brand_id,</if>
+                    <if test="skuDefaultImg != null  and skuDefaultImg != ''  ">sku_default_img,</if>
+                    <if test="skuTitle != null  and skuTitle != ''  ">sku_title,</if>
+                    <if test="skuSubtitle != null  and skuSubtitle != ''  ">sku_subtitle,</if>
+                    <if test="price != null  ">price,</if>
+                    <if test="saleCount != null  ">sale_count,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="spuId != null  ">#{spuId,jdbcType=BIGINT},</if>
+                    <if test="skuName != null  and skuName != ''  ">#{skuName,jdbcType=VARCHAR},</if>
+                    <if test="skuDesc != null  and skuDesc != ''  ">#{skuDesc,jdbcType=VARCHAR},</if>
+                    <if test="catalogId != null  ">#{catalogId,jdbcType=BIGINT},</if>
+                    <if test="brandId != null  ">#{brandId,jdbcType=BIGINT},</if>
+                    <if test="skuDefaultImg != null  and skuDefaultImg != ''  ">#{skuDefaultImg,jdbcType=VARCHAR},</if>
+                    <if test="skuTitle != null  and skuTitle != ''  ">#{skuTitle,jdbcType=VARCHAR},</if>
+                    <if test="skuSubtitle != null  and skuSubtitle != ''  ">#{skuSubtitle,jdbcType=VARCHAR},</if>
+                    <if test="price != null  ">#{price,jdbcType=DECIMAL},</if>
+                    <if test="saleCount != null  ">#{saleCount,jdbcType=BIGINT},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="skuId">
+        insert into  pms_sku_info (
+            sku_id,
+            spu_id,
+            sku_name,
+            sku_desc,
+            catalog_id,
+            brand_id,
+            sku_default_img,
+            sku_title,
+            sku_subtitle,
+            price,
+            sale_count
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.skuId,jdbcType=BIGINT},
+                #{record.spuId,jdbcType=BIGINT},
+                #{record.skuName,jdbcType=VARCHAR},
+                #{record.skuDesc,jdbcType=VARCHAR},
+                #{record.catalogId,jdbcType=BIGINT},
+                #{record.brandId,jdbcType=BIGINT},
+                #{record.skuDefaultImg,jdbcType=VARCHAR},
+                #{record.skuTitle,jdbcType=VARCHAR},
+                #{record.skuSubtitle,jdbcType=VARCHAR},
+                #{record.price,jdbcType=DECIMAL},
+                #{record.saleCount,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="SkuInfo">
+        update pms_sku_info set
+                sku_id =#{skuId,jdbcType=BIGINT} ,
+                spu_id =#{spuId,jdbcType=BIGINT} ,
+                sku_name =#{skuName,jdbcType=VARCHAR} ,
+                sku_desc =#{skuDesc,jdbcType=VARCHAR} ,
+                catalog_id =#{catalogId,jdbcType=BIGINT} ,
+                brand_id =#{brandId,jdbcType=BIGINT} ,
+                sku_default_img =#{skuDefaultImg,jdbcType=VARCHAR} ,
+                sku_title =#{skuTitle,jdbcType=VARCHAR} ,
+                sku_subtitle =#{skuSubtitle,jdbcType=VARCHAR} ,
+                price =#{price,jdbcType=DECIMAL} ,
+                sale_count =#{saleCount,jdbcType=BIGINT} 
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="SkuInfo">
+        update pms_sku_info
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="spuId != null  ">spu_id = #{spuId,jdbcType=BIGINT},</if>
+                    <if test="skuName != null  and skuName != ''  ">sku_name = #{skuName,jdbcType=VARCHAR},</if>
+                    <if test="skuDesc != null  and skuDesc != ''  ">sku_desc = #{skuDesc,jdbcType=VARCHAR},</if>
+                    <if test="catalogId != null  ">catalog_id = #{catalogId,jdbcType=BIGINT},</if>
+                    <if test="brandId != null  ">brand_id = #{brandId,jdbcType=BIGINT},</if>
+                    <if test="skuDefaultImg != null  and skuDefaultImg != ''  ">sku_default_img = #{skuDefaultImg,jdbcType=VARCHAR},</if>
+                    <if test="skuTitle != null  and skuTitle != ''  ">sku_title = #{skuTitle,jdbcType=VARCHAR},</if>
+                    <if test="skuSubtitle != null  and skuSubtitle != ''  ">sku_subtitle = #{skuSubtitle,jdbcType=VARCHAR},</if>
+                    <if test="price != null  ">price = #{price,jdbcType=DECIMAL},</if>
+                    <if test="saleCount != null  ">sale_count = #{saleCount,jdbcType=BIGINT},</if>
+        </trim>
+        where sku_id = #{skuId,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_sku_info
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="spuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.spuId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuName,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuDesc = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuDesc,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="catalogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.catalogId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="brandId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.brandId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuDefaultImg = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuDefaultImg,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuTitle = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuTitle,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuSubtitle = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuSubtitle,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="price = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.price,jdbcType=DECIMAL}
+                        </foreach>
+                    </trim>
+                    <trim prefix="saleCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.saleCount,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+        </trim>
+        where sku_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.skuId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_sku_info
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="spuId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.spuId != null  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.spuId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.skuName != null  and records.skuName != ''  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuName,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuDesc = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.skuDesc != null  and records.skuDesc != ''  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuDesc,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="catalogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.catalogId != null  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.catalogId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="brandId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.brandId != null  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.brandId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuDefaultImg = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.skuDefaultImg != null  and records.skuDefaultImg != ''  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuDefaultImg,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuTitle = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.skuTitle != null  and records.skuTitle != ''  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuTitle,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="skuSubtitle = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.skuSubtitle != null  and records.skuSubtitle != ''  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.skuSubtitle,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="price = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.price != null  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.price,jdbcType=DECIMAL}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="saleCount = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.saleCount != null  " >
+                            when sku_id = #{records.skuId,jdbcType=BIGINT} then #{records.saleCount,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where sku_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.skuId}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_sku_info where sku_id = #{skuId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_sku_info where sku_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

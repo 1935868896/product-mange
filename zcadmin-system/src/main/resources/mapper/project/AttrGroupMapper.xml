@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.AttrGroupMapper">
+    <resultMap type="AttrGroup" id="BaseResultMap">
+            <result property="attrGroupId" jdbcType="BIGINT" column="attr_group_id"/>
+            <result property="attrGroupName" jdbcType="CHAR" column="attr_group_name"/>
+            <result property="sort" jdbcType="INTEGER" column="sort"/>
+            <result property="descript" jdbcType="VARCHAR" column="descript"/>
+            <result property="icon" jdbcType="VARCHAR" column="icon"/>
+            <result property="catelogId" jdbcType="BIGINT" column="catelog_id"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+attr_group_id,attr_group_name,sort,descript,icon,catelog_id
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_group
+        where attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_group
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="attrGroupId != null ">
+                and attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+            </if>
+            <if test="attrGroupName != null  and attrGroupName != '' ">
+                and attr_group_name = #{attrGroupName,jdbcType=CHAR}
+            </if>
+            <if test="sort != null ">
+                and sort = #{sort,jdbcType=INTEGER}
+            </if>
+            <if test="descript != null  and descript != '' ">
+                and descript = #{descript,jdbcType=VARCHAR}
+            </if>
+            <if test="icon != null  and icon != '' ">
+                and icon = #{icon,jdbcType=VARCHAR}
+            </if>
+            <if test="catelogId != null ">
+                and catelog_id = #{catelogId,jdbcType=BIGINT}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_group
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.attrGroupId != null ">
+                and attr_group_id = #{record.attrGroupId,jdbcType=BIGINT}
+            </if>
+            <if test="record.attrGroupName != null  and record.attrGroupName != '' ">
+                and attr_group_name = #{record.attrGroupName,jdbcType=CHAR}
+            </if>
+            <if test="record.sort != null ">
+                and sort = #{record.sort,jdbcType=INTEGER}
+            </if>
+            <if test="record.descript != null  and record.descript != '' ">
+                and descript = #{record.descript,jdbcType=VARCHAR}
+            </if>
+            <if test="record.icon != null  and record.icon != '' ">
+                and icon = #{record.icon,jdbcType=VARCHAR}
+            </if>
+            <if test="record.catelogId != null ">
+                and catelog_id = #{record.catelogId,jdbcType=BIGINT}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="AttrGroup">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_attr_group
+        where attr_group_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_attr_group
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="attrGroupId != null ">
+        and attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+        </if>
+        <if test="attrGroupName != null  and attrGroupName != '' ">
+        and attr_group_name = #{attrGroupName,jdbcType=CHAR}
+        </if>
+        <if test="sort != null ">
+        and sort = #{sort,jdbcType=INTEGER}
+        </if>
+        <if test="descript != null  and descript != '' ">
+        and descript = #{descript,jdbcType=VARCHAR}
+        </if>
+        <if test="icon != null  and icon != '' ">
+        and icon = #{icon,jdbcType=VARCHAR}
+        </if>
+        <if test="catelogId != null ">
+        and catelog_id = #{catelogId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="AttrGroup"             useGeneratedKeys="true" keyProperty="attrGroupId">
+        insert into pms_attr_group (
+            attr_group_id,
+            attr_group_name,
+            sort,
+            descript,
+            icon,
+            catelog_id
+    )
+        values
+        (         #{attrGroupId,jdbcType=BIGINT},         #{attrGroupName,jdbcType=CHAR},         #{sort,jdbcType=INTEGER},         #{descript,jdbcType=VARCHAR},         #{icon,jdbcType=VARCHAR},         #{catelogId,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="AttrGroup"            useGeneratedKeys="true" keyProperty="attrGroupId">
+        insert into pms_attr_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="attrGroupName != null  and attrGroupName != ''  ">attr_group_name,</if>
+                    <if test="sort != null  ">sort,</if>
+                    <if test="descript != null  and descript != ''  ">descript,</if>
+                    <if test="icon != null  and icon != ''  ">icon,</if>
+                    <if test="catelogId != null  ">catelog_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="attrGroupName != null  and attrGroupName != ''  ">#{attrGroupName,jdbcType=CHAR},</if>
+                    <if test="sort != null  ">#{sort,jdbcType=INTEGER},</if>
+                    <if test="descript != null  and descript != ''  ">#{descript,jdbcType=VARCHAR},</if>
+                    <if test="icon != null  and icon != ''  ">#{icon,jdbcType=VARCHAR},</if>
+                    <if test="catelogId != null  ">#{catelogId,jdbcType=BIGINT},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="attrGroupId">
+        insert into  pms_attr_group (
+            attr_group_id,
+            attr_group_name,
+            sort,
+            descript,
+            icon,
+            catelog_id
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.attrGroupId,jdbcType=BIGINT},
+                #{record.attrGroupName,jdbcType=CHAR},
+                #{record.sort,jdbcType=INTEGER},
+                #{record.descript,jdbcType=VARCHAR},
+                #{record.icon,jdbcType=VARCHAR},
+                #{record.catelogId,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="AttrGroup">
+        update pms_attr_group set
+                attr_group_id =#{attrGroupId,jdbcType=BIGINT} ,
+                attr_group_name =#{attrGroupName,jdbcType=CHAR} ,
+                sort =#{sort,jdbcType=INTEGER} ,
+                descript =#{descript,jdbcType=VARCHAR} ,
+                icon =#{icon,jdbcType=VARCHAR} ,
+                catelog_id =#{catelogId,jdbcType=BIGINT} 
+        where attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="AttrGroup">
+        update pms_attr_group
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="attrGroupName != null  and attrGroupName != ''  ">attr_group_name = #{attrGroupName,jdbcType=CHAR},</if>
+                    <if test="sort != null  ">sort = #{sort,jdbcType=INTEGER},</if>
+                    <if test="descript != null  and descript != ''  ">descript = #{descript,jdbcType=VARCHAR},</if>
+                    <if test="icon != null  and icon != ''  ">icon = #{icon,jdbcType=VARCHAR},</if>
+                    <if test="catelogId != null  ">catelog_id = #{catelogId,jdbcType=BIGINT},</if>
+        </trim>
+        where attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_attr_group
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="attrGroupName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.attrGroupName,jdbcType=CHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="sort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.sort,jdbcType=INTEGER}
+                        </foreach>
+                    </trim>
+                    <trim prefix="descript = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.descript,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="icon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.icon,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.catelogId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+        </trim>
+        where attr_group_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.attrGroupId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_attr_group
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="attrGroupName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.attrGroupName != null  and records.attrGroupName != ''  " >
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.attrGroupName,jdbcType=CHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="sort = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.sort != null  " >
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.sort,jdbcType=INTEGER}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="descript = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.descript != null  and records.descript != ''  " >
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.descript,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="icon = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.icon != null  and records.icon != ''  " >
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.icon,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.catelogId != null  " >
+                            when attr_group_id = #{records.attrGroupId,jdbcType=BIGINT} then #{records.catelogId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where attr_group_id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.attrGroupId}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_attr_group where attr_group_id = #{attrGroupId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_attr_group where attr_group_id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

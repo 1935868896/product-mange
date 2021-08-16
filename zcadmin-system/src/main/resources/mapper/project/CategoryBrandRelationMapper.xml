@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.modules.project.mapper.CategoryBrandRelationMapper">
+    <resultMap type="CategoryBrandRelation" id="BaseResultMap">
+            <result property="id" jdbcType="BIGINT" column="id"/>
+            <result property="brandId" jdbcType="BIGINT" column="brand_id"/>
+            <result property="catelogId" jdbcType="BIGINT" column="catelog_id"/>
+            <result property="brandName" jdbcType="VARCHAR" column="brand_name"/>
+            <result property="catelogName" jdbcType="VARCHAR" column="catelog_name"/>
+    </resultMap>
+            <sql id="Base_Column_List">
+id,brand_id,catelog_id,brand_name,catelog_name
+    </sql>
+        <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category_brand_relation
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectListBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category_brand_relation
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="brandId != null ">
+                and brand_id = #{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="catelogId != null ">
+                and catelog_id = #{catelogId,jdbcType=BIGINT}
+            </if>
+            <if test="brandName != null  and brandName != '' ">
+                and brand_name = #{brandName,jdbcType=VARCHAR}
+            </if>
+            <if test="catelogName != null  and catelogName != '' ">
+                and catelog_name = #{catelogName,jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <select id="selectPageBySelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category_brand_relation
+        where 1=1
+        <!-- <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+            <if test="record.id != null ">
+                and id = #{record.id,jdbcType=BIGINT}
+            </if>
+            <if test="record.brandId != null ">
+                and brand_id = #{record.brandId,jdbcType=BIGINT}
+            </if>
+            <if test="record.catelogId != null ">
+                and catelog_id = #{record.catelogId,jdbcType=BIGINT}
+            </if>
+            <if test="record.brandName != null  and record.brandName != '' ">
+                and brand_name = #{record.brandName,jdbcType=VARCHAR}
+            </if>
+            <if test="record.catelogName != null  and record.catelogName != '' ">
+                and catelog_name = #{record.catelogName,jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List"
+            resultType="CategoryBrandRelation">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_category_brand_relation
+        where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </select>
+
+    <select id="selectCountBySelective" resultType="java.lang.Integer">
+        select
+        count(1)
+        from pms_category_brand_relation
+        where 1=1
+        <!--        <if test="name != null and name != ''">and name like CONCAT('%','${name}','%' )</if>-->
+        <if test="id != null ">
+        and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="brandId != null ">
+        and brand_id = #{brandId,jdbcType=BIGINT}
+        </if>
+        <if test="catelogId != null ">
+        and catelog_id = #{catelogId,jdbcType=BIGINT}
+        </if>
+        <if test="brandName != null  and brandName != '' ">
+        and brand_name = #{brandName,jdbcType=VARCHAR}
+        </if>
+        <if test="catelogName != null  and catelogName != '' ">
+        and catelog_name = #{catelogName,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="CategoryBrandRelation"             useGeneratedKeys="true" keyProperty="id">
+        insert into pms_category_brand_relation (
+            id,
+            brand_id,
+            catelog_id,
+            brand_name,
+            catelog_name
+    )
+        values
+        (         #{id,jdbcType=BIGINT},         #{brandId,jdbcType=BIGINT},         #{catelogId,jdbcType=BIGINT},         #{brandName,jdbcType=VARCHAR},         #{catelogName,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="CategoryBrandRelation"            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_category_brand_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="brandId != null  ">brand_id,</if>
+                    <if test="catelogId != null  ">catelog_id,</if>
+                    <if test="brandName != null  and brandName != ''  ">brand_name,</if>
+                    <if test="catelogName != null  and catelogName != ''  ">catelog_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="brandId != null  ">#{brandId,jdbcType=BIGINT},</if>
+                    <if test="catelogId != null  ">#{catelogId,jdbcType=BIGINT},</if>
+                    <if test="brandName != null  and brandName != ''  ">#{brandName,jdbcType=VARCHAR},</if>
+                    <if test="catelogName != null  and catelogName != ''  ">#{catelogName,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List"             useGeneratedKeys="true" keyProperty="id">
+        insert into  pms_category_brand_relation (
+            id,
+            brand_id,
+            catelog_id,
+            brand_name,
+            catelog_name
+        )
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (
+                #{record.id,jdbcType=BIGINT},
+                #{record.brandId,jdbcType=BIGINT},
+                #{record.catelogId,jdbcType=BIGINT},
+                #{record.brandName,jdbcType=VARCHAR},
+                #{record.catelogName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="CategoryBrandRelation">
+        update pms_category_brand_relation set
+                id =#{id,jdbcType=BIGINT} ,
+                brand_id =#{brandId,jdbcType=BIGINT} ,
+                catelog_id =#{catelogId,jdbcType=BIGINT} ,
+                brand_name =#{brandName,jdbcType=VARCHAR} ,
+                catelog_name =#{catelogName,jdbcType=VARCHAR} 
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBySelective" parameterType="CategoryBrandRelation">
+        update pms_category_brand_relation
+        <trim prefix="SET" suffixOverrides=",">
+                    <if test="brandId != null  ">brand_id = #{brandId,jdbcType=BIGINT},</if>
+                    <if test="catelogId != null  ">catelog_id = #{catelogId,jdbcType=BIGINT},</if>
+                    <if test="brandName != null  and brandName != ''  ">brand_name = #{brandName,jdbcType=VARCHAR},</if>
+                    <if test="catelogName != null  and catelogName != ''  ">catelog_name = #{catelogName,jdbcType=VARCHAR},</if>
+        </trim>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update pms_category_brand_relation
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="brandId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.brandId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.catelogId,jdbcType=BIGINT}
+                        </foreach>
+                    </trim>
+                    <trim prefix="brandName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.brandName,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.catelogName,jdbcType=VARCHAR}
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update pms_category_brand_relation
+        <trim prefix="SET" suffixOverrides=",">
+                    <trim prefix="brandId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.brandId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.brandId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogId = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.catelogId != null  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.catelogId,jdbcType=BIGINT}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="brandName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.brandName != null  and records.brandName != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.brandName,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+                    <trim prefix="catelogName = case" suffix="end,">
+                        <foreach collection="list" index="index" item="records">
+                            <if test="records.catelogName != null  and records.catelogName != ''  " >
+                            when id = #{records.id,jdbcType=BIGINT} then #{records.catelogName,jdbcType=VARCHAR}
+                            </if>
+                        </foreach>
+                    </trim>
+        </trim>
+        where id in
+        <foreach collection="list" item="records" open="(" close=")" separator=", ">
+            #{records.id}
+        </foreach>
+    </update>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pms_category_brand_relation where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from pms_category_brand_relation where id in
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>
